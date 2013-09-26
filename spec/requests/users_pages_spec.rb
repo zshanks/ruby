@@ -2,14 +2,12 @@ require 'spec_helper'
 
 describe "UsersPages" do
   describe "Sign Up" do
-<<<<<<< HEAD
 	it "allows the user to fill in name and password" do
       visit signup_path
       fill_in 'Username', with: 'user@example.com'
       fill_in 'Password', with: 'password'
       fill_in 'Confirmation', with: 'password'
       click_button 'Create new account'
-=======
     let(:submit) { 'Create new account' }
 
     before { visit signup_path }
@@ -35,7 +33,7 @@ describe "UsersPages" do
       it "adds a new user to the system" do
         expect { click_button submit }.to change(User, :count).by(1)
       end
->>>>>>> 92668a910476902d168fbba129b07e68487a9696
     end
   end
+end
 end

@@ -1,9 +1,7 @@
 require 'spec_helper'
 
 describe User do
-<<<<<<< HEAD
 
-=======
   let(:user) { FactoryGirl.create(:user) }
   subject { user }
 
@@ -102,5 +100,4 @@ describe User do
       specify { expect(authenticated_user).to be_false }
     end
   end
->>>>>>> 92668a910476902d168fbba129b07e68487a9696
 end
