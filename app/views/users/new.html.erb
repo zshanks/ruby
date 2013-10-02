@@ -1,13 +1,6 @@
 <h1>Sign up!</h1>
-
 <%= form_for @user do |f| %>
-	<%= f.label :username, 'Enter Username:' %>	
-	  <%= f.text_field :username %>
-  <%= f.label :email, 'Enter Email:' %>	
-	  <%= f.text_field :email %>
-  <%= f.label :password, 'Enter Password:' %>	
-	  <%= f.text_field :password %>
-  <%= f.label :password_confirmation, 'Enter Confirmation:' %>	
-    <%= f.text_field :password_confirmation %>
+	<%= render 'user_form', f: form %>
   <%= f.submit 'Create new account' %>
 <% end %>
+

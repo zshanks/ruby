@@ -1,0 +1,5 @@
+<h1>Edit user</h1>
+<%= form_for @user do |f| %>
+	<%= render 'user_form', f: form %>
+	<%= f.submit 'Create new account' %>
+<% end %>
