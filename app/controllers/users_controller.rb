@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     #@user = User.new(:username => params[:username],:password => params[:password])
     #render 'new'
     
-		permitted_params = params.require(:user).permit(:username, :password, :password_confirmation)
+		permitted_params = params.require(:user).permit(:username, :email, :password, :password_confirmation)
 		@user = User.new(permitted_params)
 		if @user.save then
 			redirect_to @user #type of response that the server can give to the browser.
