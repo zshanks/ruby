@@ -1,23 +1,30 @@
 require 'spec_helper'
 
 describe "UsersPages" do
+  subject { page }
+
   describe "Sign Up" do
     let(:submit) { 'Create new account' }
 
     before { visit signup_path }
 
+    describe "passwords are not visible when typing" do
+      it { should have_field 'user_password', type: 'password' }
+      it { should have_field 'user_password_confirmation', type: 'password' }
+    end
+
     describe "with invalid information" do
       it "does not add the user to the system" do
-				expect { click_button submit }.not_to change(User, :count)
+expect { click_button submit }.not_to change(User, :count)
       end
     end
 
     describe "with valid information" do
       before do
-				fill_in 'Username', with: 'User Name'
-				fill_in 'Email', with: 'user@example.com'
-				fill_in 'Password', with: 'password'
-				fill_in 'Confirmation', with: 'password'
+fill_in 'Username', with: 'User Name'
+fill_in 'Email', with: 'user@example.com'
+fill_in 'Password', with: 'password'
+fill_in 'Confirmation', with: 'password'
       end
 
       it "allows the user to fill in user fields" do
@@ -31,8 +38,6 @@ describe "UsersPages" do
   end
 
   describe "Display Users" do
-    subject { page }
-
     describe "individually" do
       let(:user) { FactoryGirl.create(:user) }
 
@@ -55,14 +60,12 @@ describe "UsersPages" do
 
       # fix up with pagination later...
       User.all.each do |user|
-				it { should have_selector('li', text: user.username) }
+it { should have_selector('li', text: user.username) }
       end
     end
   end
 
   describe "Edit users" do
-    subject { page }
-
     let (:user) { FactoryGirl.create(:user) }
     let!(:orig_username) { user.username }
     let (:submit) { 'Update account' }
@@ -75,9 +78,9 @@ describe "UsersPages" do
 
     describe "with invalid information" do
       before do
-				fill_in 'Username', with: ''
-				fill_in 'Password', with: user.password
-				fill_in 'Confirmation', with: user.password
+fill_in 'Username', with: ''
+fill_in 'Password', with: user.password
+fill_in 'Confirmation', with: user.password
       end
 
       describe "does not change data" do
@@ -94,9 +97,9 @@ describe "UsersPages" do
 
     describe "with valid information" do
       before do
-				fill_in 'Username', with: 'Changed name'
-				fill_in 'Password', with: user.password
-				fill_in 'Confirmation', with: user.password
+fill_in 'Username', with: 'Changed name'
+fill_in 'Password', with: user.password
+fill_in 'Confirmation', with: user.password
       end
 
       describe "changes the data" do
@@ -109,6 +112,17 @@ describe "UsersPages" do
       it "does not add a new user to the system" do
         expect { click_button submit }.not_to change(User, :count)
       end
+    end
+  end
+
+  describe "Delete users" do
+    let!(:user) { FactoryGirl.create(:user) }
+
+    before { visit users_path }
+
+    it { should have_link('delete', href: user_path(user)) }
+    it "removes a user from the system" do
+      expect { click_link('delete') }.to change(User, :count).by(-1)
     end
   end
 end
