@@ -21,10 +21,10 @@ expect { click_button submit }.not_to change(User, :count)
 
     describe "with valid information" do
       before do
-fill_in 'Username', with: 'User Name'
-fill_in 'Email', with: 'user@example.com'
-fill_in 'Password', with: 'password'
-fill_in 'Confirmation', with: 'password'
+				fill_in 'Username', with: 'User Name'
+				fill_in 'Email', with: 'user@example.com'
+				fill_in 'Password', with: 'password'
+				fill_in 'Confirmation', with: 'password'
       end
 
       it "allows the user to fill in user fields" do
@@ -78,9 +78,9 @@ it { should have_selector('li', text: user.username) }
 
     describe "with invalid information" do
       before do
-fill_in 'Username', with: ''
-fill_in 'Password', with: user.password
-fill_in 'Confirmation', with: user.password
+				fill_in 'Username', with: ''
+				fill_in 'Password', with: user.password
+				fill_in 'Confirmation', with: user.password
       end
 
       describe "does not change data" do
@@ -97,9 +97,9 @@ fill_in 'Confirmation', with: user.password
 
     describe "with valid information" do
       before do
-fill_in 'Username', with: 'Changed name'
-fill_in 'Password', with: user.password
-fill_in 'Confirmation', with: user.password
+				fill_in 'Username', with: 'Changed name'
+				fill_in 'Password', with: user.password
+				fill_in 'Confirmation', with: user.password
       end
 
       describe "changes the data" do
