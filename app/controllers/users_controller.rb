@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :ensure_user_logged_in, only: [:edit, :update]
+  before_action :ensure_correct_user, only: [:edit, :update]
+  before_action :ensure_admin_user, only: [:edit, :update]
 	def new
 		@user = User.new
 	end
@@ -21,12 +24,7 @@ class UsersController < ApplicationController
     @users = User.all
   end
     
-  def edit
-    @user = User.find(params[:id])
-  end
-    
   def update
-    @user = User.find(params[:id])
     if @user.update(permitted_params) then
 			redirect_to @user
 		else
@@ -42,5 +40,18 @@ class UsersController < ApplicationController
   private 
     def permitted_params
       params.require(:user).permit(:username, :password, :password_confirmation, :email)
+    end
+    
+    def ensure_user_logged_in
+      redirect_to root_path unless logged_in?
+    end
+    
+    def ensure_correct_user
+      @user = User.find(params[:id])
+      redirect_to root_path unless current_user?(@user)
+    end
+    
+    def ensure_admin_user
+      redirect_to users_path unless current_user.admin?
     end
 end
