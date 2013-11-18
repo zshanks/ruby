@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
-	# attr_reader :username, :password, :confirmation
-	# attr_writer :username, :password, :confirmation
+  has_many :referees
+  has_many :players
+  has_many :contests
 	has_secure_password
   
   validates :username, presence: true
