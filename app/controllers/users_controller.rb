@@ -4,26 +4,33 @@ class UsersController < ApplicationController
   before_action :ensure_admin_user, only: [:destroy]
   before_action :ensure_admin_user, only: [:edit, :update]
   
+  respond_to :html, :json, :xml
+  
 	def new
-		@user = User.new
+    @user = User.new
+    respond_with(@user)
 	end
   
   def create
 		@user = User.new(permitted_params)
     if @user.save then
 			flash[:success] = "Welcome to the site: #{@user.username}"
+      login @user
 			redirect_to @user #type of response that the server can give to the browser.
 		else
 			render 'new'
 		end
+    respond_with(@user)
   end
     
   def show
     @user = User.find(params[:id])
+    respond_with(@user)
   end
 		
   def index
     @users = User.all
+    respond_with(@users)
   end
     
   def update
@@ -32,11 +39,13 @@ class UsersController < ApplicationController
 		else
       render 'edit'
 		end
+    respond_with(@user)
   end
     
   def destroy
 		@user = User.find(params[:id]).destroy
     redirect_to users_path
+    respond_with(@user)
   end  
     
   private 
