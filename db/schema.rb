@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131111174643) do
+ActiveRecord::Schema.define(version: 20131212220158) do
 
   create_table "contests", force: true do |t|
     t.datetime "deadline"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 20131111174643) do
     t.string   "password_digest"
     t.string   "email"
     t.boolean  "admin",           default: false
+    t.string   "chat_url"
   end
 
 end
