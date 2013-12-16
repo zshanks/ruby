@@ -3,8 +3,30 @@ class Match < ActiveRecord::Base
   has_many :player_matches
   has_many :players, through: :player_matches
   
-  validates :status, :completion, :manager, :earliest_start, presence: true
+  validates :status, :manager, presence: true  
+
+  validates_date :completion, :on_or_before => lambda { Time.now.change(:usec =>0) }, :if => :check_completed
+  validates_datetime :earliest_start, :if => :check_start
+  validate :check_num_players
   
-  validates_datetime :earliest_start, :on_or_after => :now
-  validates_datetime :completion, :on_or_before => lambda { |record| record.earliest_start }  
+  def check_num_players
+    if self.players && self.manager
+      if self.players.count != self.manager.referee.players_per_game
+        errors.add(:manager, "Invalid number of players")
+      end 
+    end 
+  end
+  
+  def check_completed
+    self.status == "Completed"
+  end
+  
+  def check_start
+    if self.status == "Completed" || self.status == "Started"
+      return false
+    else
+      return true
+    end
+  end
+  
 end

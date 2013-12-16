@@ -7,7 +7,7 @@ class Referee < ActiveRecord::Base
   validates :file_location, :rules_url, presence: true, length: {minimum: 1}
   validates :players_per_game, presence: true, :inclusion => 1..10
   validates_numericality_of :players_per_game, :only_integer => true
-  validate :existing_file
+  validate :file_exists?
   
   validates_format_of :rules_url, :with => URI::regexp
   
@@ -15,7 +15,7 @@ class Referee < ActiveRecord::Base
   
   include Uploadable 
   
-  def existing_file?
+  def file_exists?
     if self.file_location.nil? or !File.exist?(self.file_location)
       errors.add(:file_location, "File location must contain a file.")
     end

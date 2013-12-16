@@ -8,13 +8,13 @@ class Player < ActiveRecord::Base
   validates :description, :name, presence: true, length: {minimum: 1}
 	validates :name, presence: true, uniqueness: {scope: :contest}
 	#validates :file_location, presence: true
-  validate :existing_file?
+  validate :file_exists?
 	
   before_destroy :destroyAction
   
 	include Uploadable
   
-  def existing_file?
+  def file_exists?
     if self.file_location.nil? or !File.exist?(self.file_location)
       errors.add(:file_location, "File location must contain a file.")
     end

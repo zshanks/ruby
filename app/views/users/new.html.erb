@@ -1,16 +1,6 @@
-<div class="container">
-  <div class="jumbotron">
-    <h1>Welcome</h1>
-    <p>Check out my awesome website!</p>
-  </div>
-</div>
-
-<div class="container">
-  <div class="jumbotron">
-    <%= form_for @user do |form| %>
-    <%= render 'user_fields', f: form %>
-    <%= form.submit "Create new account", class: 'btn btn-primary btn-lg' %>
-    <% end %>
-  </div>
-</div>
+<h1>Sign up!</h1>
+<%= form_for @user do |f| %>
+  <%= render 'user_form', f: form %>
+  <%= form.submit 'Create new account' %>
+<%end %>
 
