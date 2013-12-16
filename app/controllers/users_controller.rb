@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 	before_action :ensure_user_logged_in, only: [:edit,:update]
   before_action :ensure_correct_user, only: [:edit,:update]
   before_action :ensure_admin_user, only: [:destroy]
-	before_action :ensure_not_logged_in, only: [:new,:create]
+  before_action :ensure_not_logged_in, only: [:create, :new]
   
   respond_to :html, :json, :xml
   

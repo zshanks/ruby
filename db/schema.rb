@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131212220158) do
+ActiveRecord::Schema.define(version: 20131215183229) do
 
   create_table "contests", force: true do |t|
     t.datetime "deadline"
@@ -48,9 +48,19 @@ ActiveRecord::Schema.define(version: 20131212220158) do
   add_index "player_matches", ["player_id"], name: "index_player_matches_on_player_id"
 
   create_table "players", force: true do |t|
+    t.string   "file_location"
+    t.text     "description"
+    t.string   "name"
+    t.boolean  "downloadable"
+    t.boolean  "playable"
+    t.integer  "contest_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "players", ["contest_id"], name: "index_players_on_contest_id"
+  add_index "players", ["user_id"], name: "index_players_on_user_id"
 
   create_table "referees", force: true do |t|
     t.string   "file_location"
@@ -71,7 +81,6 @@ ActiveRecord::Schema.define(version: 20131212220158) do
     t.string   "password_digest"
     t.string   "email"
     t.boolean  "admin",           default: false
-    t.string   "chat_url"
   end
 
 end

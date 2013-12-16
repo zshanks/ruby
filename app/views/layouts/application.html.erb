@@ -4,51 +4,43 @@
   <title>GameContestServer</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation" >
-
-  <!-- Collect the nav links, forms, and other content for toggling -->
-    <ul class="nav navbar-nav">
+  <div class="container">
     
-      <% if !logged_in? %>
-        <li <%=if current_page?(login_path) then 'class=active' end%>>
-          <%= link_to "Log In",    login_path %></li>
-      <li <%=if current_page?(root_path) then 'class=active' end%>>
-            <%= link_to "Home", root_path %></li> 
-      <li <%=if current_page?(root_path) then 'class=active' end%>>
-            <%= link_to "Game Contest Server", root_path %></li> 
-      <li <%=if current_page?(users_path) then 'class=active' end%>>
-            <%= link_to "Users",    users_path %></li>
-        <li <%=if current_page?(signup_path) then 'class=active' end%>>
-              <%= link_to "Sign Up",    signup_path %></li>
-      <% end %>
-      
-      <% if logged_in? %>
-      <li <%=if current_page?(root_path) then 'class=active' end%>>
-            <%= link_to "Home", root_path %></li> 
-      <li <%=if current_page?(root_path) then 'class=active' end%>>
-            <%= link_to "Game Contest Server", root_path %></li> 
-      <li <%=if current_page?(users_path) then 'class=active' end%>>
-            <%= link_to "Users",    users_path %></li>
-      <li <%=if current_page?(edit_user_path(current_user)) then 'class=active' end%>>
-        <%= link_to "Settings",     edit_user_path(current_user) %></li>
-      <li <%=if current_page?(user_path(current_user)) then 'class=active' end%>>
-            <%= link_to "Profile",    user_path(current_user) %></li>
-      <li <%=if current_page?(new_referee_path) then 'class-active' end%>>
-            <%= link_to "Create Referee",    new_referee_path %>
-      <li <%=if current_page?(referees_path) then 'class-active' end%>>
-            <%= link_to "My Referees",    referees_path %>
-      <li <%=if current_page?(new_referee_path) then 'class-active' end%>>
-            <%= link_to "Create Contest",    new_contest_path %>
-      <li <%=if current_page?(referees_path) then 'class-active' end%>>
-            <%= link_to "My Contests",    contests_path %>
-      <li> <%= link_to "Log Out",    logout_path(current_user), method: :delete %></li>
-      <% end %>
-      
-    </ul>
-</nav>
+    <div class="masthead">
+      <h3 class="text-muted">Game Contest Server</h3>
+      <nav class="navbar navbar-default" role="navigation">
+        <ul class="nav nav-justified">
+          <li class="active"><a href="/signup">Homepage</a></li>
+          <li><%= link_to "Game Contest Server", root_path %></li>
+          <li><%= link_to "Users", users_path %></li>
+          
+          <% if logged_in? %>
+          <li id="fat-menu" class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Account <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Profile", current_user %></li>
+              <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+              <li class="divider"></li>
+              <li>
+                <%= link_to "Log Out", logout_path, method: "delete" %>
+              </li>
+            </ul>
+          </li>
+          <% else %>
+          <li><a href="/signup">Sign Up</a></li>
+          <li><a href="/login" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i>Log In</a></li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  
 	<% flash.each do |level, message| %>
 		<div class ="alert alert-<%= level %>"><%= message %></div>
 	<% end %>
