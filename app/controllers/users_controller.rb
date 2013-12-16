@@ -14,6 +14,7 @@ class UsersController < ApplicationController
   def create
 		@user = User.new(permitted_params)
     if @user.save then
+      sign_in @user
 			flash[:success] = "Welcome to the site: #{@user.username}"
 			cookies.signed[:user_id] = @user.id
 		end
@@ -38,6 +39,8 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
     if @user.update(permitted_params) then
 			flash[:success] = "Successfully made updates to #{@username}"
+    else
+      flash.now[:danger] = "Unable to update #{@user.username}"
 		end
     respond_with(@user)
   end
@@ -45,10 +48,13 @@ class UsersController < ApplicationController
   def destroy
 		@user = User.find(params[:id])
 		if @user.admin
-			redirect_to root_path
+      flash[:danger] = "That's an admin, you can't delete that!"
+    elsif(current_user.admin)
+      @user.destroy
+      flash[:success] = "User deleted successfully"
+   else
+      flash[:danger] = "Your not at admin. Who do you think your foolin?"
 		end
-		@user.destroy
-		flash[:success] = "Successfully deleted user"
 		respond_with(@user)
   end
 	
@@ -68,7 +74,7 @@ class UsersController < ApplicationController
     end
     
     def ensure_not_logged_in
-      redirect_to root_path, flash: {:danger => "Can't perform that action!"} unless !logged_in?
+      redirect_to root_path, flash: {:warning => "Can't perform that action!"} unless !logged_in?
     end
 		
     def permitted_params

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131215183229) do
+ActiveRecord::Schema.define(version: 20131216005848) do
 
   create_table "contests", force: true do |t|
     t.datetime "deadline"
@@ -75,12 +75,13 @@ ActiveRecord::Schema.define(version: 20131215183229) do
   add_index "referees", ["user_id"], name: "index_referees_on_user_id"
 
   create_table "users", force: true do |t|
-    t.string   "username"
+    t.string   "name"
+    t.string   "email"
+    t.string   "password"
+    t.string   "confirm_password"
+    t.string   "chat_url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "password_digest"
-    t.string   "email"
-    t.boolean  "admin",           default: false
   end
 
 end
