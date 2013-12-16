@@ -1,5 +1,5 @@
 GameContestServer::Application.routes.draw do
-	root 'users#index'
+	root to: 'users#index'
 
 	resources :users
 	resources :referees

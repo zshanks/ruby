@@ -1,5 +1,4 @@
-<h1>Edit Referee</h1>
-<%= form_for @referee do |form| %>
-	<%= render 'referee_fields', f: form %>
-	<%= form.submit 'Update Referee' %>
-<% end %>
+<%= form_for @referee do |f| %>
+    <%= render 'referee_fields' , f:f %>
+    <%= f.submit "Update Referee" %>
+<%end%>

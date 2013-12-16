@@ -50,10 +50,6 @@ class ContestController < ApplicationController
   
   
   private
-    def ensure_user_logged_in
-      redirect_to login_path, flash: { :warning => "Unable, please log in!" } unless logged_in? 
-    end
-  
     def permitted_params
       params.require(:contest).permit(:deadline, :start, :description, :name, :contest_type, :referee_id)
     end

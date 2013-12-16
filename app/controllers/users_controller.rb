@@ -61,7 +61,7 @@ class UsersController < ApplicationController
   private 
     
     def ensure_user_logged_in
-      redirect_to login_path unless logged_in?
+     redirect_to login_path, flash: { :warning => "Unable, please log in!" } unless logged_in? 
     end
     
     def ensure_correct_user
@@ -70,14 +70,17 @@ class UsersController < ApplicationController
     end
     
     def ensure_admin_user
-      redirect_to root_path, flash: {:danger => "Can't perform that action!"} unless current_user.admin?
+      if !current_user.admin? || current_user?(@user)
+        redirect_to root_path, flash: {:danger => "Greetings admin!"}
+      end
     end
     
     def ensure_not_logged_in
-      redirect_to root_path, flash: {:warning => "Can't perform that action!"} unless !logged_in?
+      redirect_to root_path, flash: {:warning => "Can't perform that action sense your logged in!"} unless !logged_in?
     end
 		
     def permitted_params
       params.require(:user).permit(:username, :password, :password_confirmation, :email)
     end
+    
 end

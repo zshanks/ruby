@@ -1,7 +1,7 @@
 class PlayersController < ApplicationController
-  before_action :ensure_user_logged_in, only: [:new, :create, :edit, :update, :destroy]
-  before_action :ensure_owner, only: [:update, :destroy, :edit]
-  before_action :retrieve_player, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_user_logged_in, only: [:new, :create, :update, :destroy, :edit]
+  before_action :ensure_owner, only: [:update , :destroy, :edit]
+  before_action :retrieve_player, only:  [:show, :edit, :destroy, :update]
 
 	def new
     contest = Contest.find(params[:contest_id])
@@ -13,7 +13,6 @@ class PlayersController < ApplicationController
     @player = contest.players.build(permitted_params)
     @player.user = current_user
     if @player.save then
-      sign_in @user
       flash[:success] = "Player successfully created!"
       redirect_to @player
     else
@@ -30,7 +29,6 @@ class PlayersController < ApplicationController
   end
 		
 	def edit
-    respond_with(@user)
 	end
     
   def update
@@ -64,6 +62,6 @@ class PlayersController < ApplicationController
     end
 		
     def permitted_params
-      params.require(:user).permit(:upload, :description, :name, :downloadable, :playable)
+      params.require(:player).permit(:upload, :description, :name, :downloadable, :playable)
     end
 end
