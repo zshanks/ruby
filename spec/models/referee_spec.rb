@@ -12,6 +12,8 @@ describe Referee do
   it { should respond_to(:matches) }
   it { should respond_to(:user) }
 
+  it { should respond_to(:referee) }
+
   describe "validations" do
     it { should be_valid }
   end
@@ -23,6 +25,12 @@ describe Referee do
 
   describe "blank file location" do
     before { referee.file_location = ' ' }
+    it { should_not be_valid }
+  end
+
+  describe "file_location points to non-existant file" do
+    before { referee.file_location = '/path/to/non/existant/file' }
+
     it { should_not be_valid }
   end
 

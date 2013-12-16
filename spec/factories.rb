@@ -46,33 +46,64 @@ FactoryGirl.define do
     contest_type "Generic Contest Type"
   end
 
+  dummy_player = 0
+
   factory :match do
+    to_create {|instance| instance.save(validate: false) }
+    ignore { existing_players 0 }
+
     status "Unknown Status"
     completion Time.current
     earliest_start Time.current
 
     factory :contest_match do
       association :manager, factory: :contest
+
+      before(:create) do |match, evaluator|
+	dummy_player = create(:player, contest: match.manager)
+      end
     end
 
     factory :challenge_match do
       association :manager, factory: :referee
+
+      before(:create) { |match| dummy_player = create(:player) }
+    end
+
+    after(:create) do |match, evaluator|
+	num_players = match.manager.referee.players_per_game
+	num_players -= evaluator.existing_players
+	create_list(:player_match, num_players, player: dummy_player, match: match)
     end
   end
-
 
   factory :player do
     user
     contest
-    sequence(:file_location) { |i| "/path/to/player/code/#{i}" }
+    sequence(:file_location) do |i|
+      location = Rails.root.join('code',
+				 'players',
+				 'test',
+				 "FactoryGirl-fake-code-#{i}").to_s
+      FileUtils.touch(location)
+      location
+    end
     description "Player Description Here"
     sequence(:name) { |i| "Player #{i}" }
   end
 
   factory :player_match do
     player
-    association :match, factory: :contest_match
+    association :match, factory: :contest_match, existing_players: 1
     score 1.0
     result "Unknown Result"
+
+    factory :winning_match do
+      result "Win"
+    end
+
+    factory :losing_match do
+      result "Loss"
+    end
   end
 end
