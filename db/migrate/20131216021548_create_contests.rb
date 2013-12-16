@@ -6,6 +6,8 @@ class CreateContests < ActiveRecord::Migration
       t.text :description
       t.string :name
       t.string :contest_type
+      t.references :referee, index: true
+      t.references :user, index: true
 
       t.timestamps
     end

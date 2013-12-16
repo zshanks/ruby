@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131216005848) do
+ActiveRecord::Schema.define(version: 20131216021548) do
 
   create_table "contests", force: true do |t|
     t.datetime "deadline"
@@ -19,9 +19,14 @@ ActiveRecord::Schema.define(version: 20131216005848) do
     t.text     "description"
     t.string   "name"
     t.string   "contest_type"
+    t.integer  "referee_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "contests", ["referee_id"], name: "index_contests_on_referee_id"
+  add_index "contests", ["user_id"], name: "index_contests_on_user_id"
 
   create_table "matches", force: true do |t|
     t.string   "status"
@@ -51,12 +56,12 @@ ActiveRecord::Schema.define(version: 20131216005848) do
     t.string   "file_location"
     t.text     "description"
     t.string   "name"
-    t.boolean  "downloadable"
-    t.boolean  "playable"
     t.integer  "contest_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "downloadable",  default: false
+    t.boolean  "playable",      default: true
   end
 
   add_index "players", ["contest_id"], name: "index_players_on_contest_id"
@@ -75,13 +80,18 @@ ActiveRecord::Schema.define(version: 20131216005848) do
   add_index "referees", ["user_id"], name: "index_referees_on_user_id"
 
   create_table "users", force: true do |t|
-    t.string   "name"
+    t.string   "username"
     t.string   "email"
     t.string   "password"
-    t.string   "confirm_password"
+    t.string   "password_confirmation"
     t.string   "chat_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "banned",                default: false
+    t.boolean  "contest_creator",       default: false
+    t.string   "password_digest"
+    t.boolean  "admin",                 default: false
+    t.string   "remember_token"
   end
 
 end
