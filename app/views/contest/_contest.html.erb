@@ -1,0 +1,12 @@
+<li>
+  <p> <%= link_to contest.name, contest_path(contest) %> </p>
+  <p> Start <%= contest.start %> </p>
+  <p> Deadline <%= contest.deadline %> </p>
+  <p> Type <%= contest.contest_type %>
+  <p> Contest description <%= contest.description %> </p>
+  <p> User <%= link_to contest.user.username, user_path(contest.user) %> </p>
+  <p> Referee <%= link_to contest.referee.name, referee_path(contest.referee) %> </p>
+  <% if logged_in? and owner?(contest) %>
+      <%= link_to "delete" , contest_path(contest) , :method => :delete , data: {confirm: "Are you really really sure you want to do that? I mean it's a big life decision. No regrets, ok?"}%>  
+  <% end %>
+</li>

@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1>Contest Creator</h1>
+    <p>Create a new contest!</p>
+  </div>
+</div>
+
+    <% if @contest.errors.any? %>
+      <div class="alert alert-danger">
+        <ul>
+          <% @contest.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+   <% end %>
+
+<div class="container">
+  <div class="jumbotron">
+    <%= form_for @contest , :action => "create", :method => :post do |f| %>
+      <%= render 'contest_fields', f: f %>
+      <%= f.submit "Create new contest", class: 'btn btn-primary btn-lg' %>
+    <% end %>
+  </div>
+</div>
+

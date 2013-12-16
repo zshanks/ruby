@@ -1,0 +1,14 @@
+<li>
+<p> <%= link_to referee.name, referee_path(referee) %> <p>
+<% if logged_in? and owner?(referee) %>
+    <%= link_to "delete" , referee_path(referee) , :method => :delete , data: {confirm: "Are you sure?"}%>  
+<% end %>
+<p> <%= link_to "Rules" , referee.rules_url %> </p>
+<p> Players Per Game <%= referee.players_per_game %> </p>
+<p> <%= referee.user.username %> </p>
+<% if referee.contests.length > 0 %>
+  <h2> Contests this referee is a part of </h2>
+  <%= render referee.contests %>
+<% end %>
+
+</li>

@@ -1,0 +1,5 @@
+<h1>Edit Player</h1>
+<%= form_for @player do |form| %>
+	<%= render 'player_fields', f: form %>
+	<%= form.submit 'Update Player' %>
+<% end %>

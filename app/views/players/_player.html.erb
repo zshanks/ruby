@@ -1,0 +1,11 @@
+<li>
+<p> <%= link_to player.name, player_path(player) %> <p>
+  <p> Name: <%= player.name %> </p>
+  <% if logged_in? and owner?(player)%>
+    <%= link_to "delete" , player_path(player) , :method => :delete , data: {confirm: "Are you sure?"} %>  
+  <% end %>
+  <p> Creator: <%= player.user.username %> </p>
+  <p> Description: <%= player.description %> </p>
+  <p> User <%= link_to player.user.username, user_path(player.user) %> </p>
+  <p> Contest <%= link_to player.contest.name, contest_path(player.contest) %> </p>
+</li>

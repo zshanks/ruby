@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1>Player Creator</h1>
+    <p>create a new player</p>
+  </div>
+</div>
+
+    <% if @player.errors.any? %>
+      <div class="alert alert-danger">
+        <ul>
+          <% @player.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+   <% end %>
+
+<div class="container">
+  <div class="jumbotron">
+    <%= form_for [@player.contest, @player], :action => "create", :method => :post do |f| %>
+      <%= render 'player_fields', f: f %>
+      <%= f.submit "Create Player", class: 'btn btn-primary btn-lg' %>
+    <% end %>
+  </div>
+</div>
+

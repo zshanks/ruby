@@ -1,25 +1,26 @@
-<h1>Create a new referee</h1>
+<div class="container">
+  <div class="jumbotron">
+    <h1>Referee Creator</h1>
+    <p>Create a new ref!</p>
+  </div>
+</div>
 
-<%= form_for @referee do |f| %>
-	<div class ="form-group">
-		<%= f.label :name %>
-		<% f.text_field :name %>
-	</div>
-	
-	<div class="form-group">
-		<%= f.label :rules_url %>
-		<%= f.text_field :rules_url, class: 'form-control' %>
-	</div>
-	
-	<div class="form-group">
-		<%= f.label :players_per_game %>
-		<%= f.text_field :player_per_game %>
-	</div>
+    <% if @referee.errors.any? %>
+      <div class="alert alert-danger">
+        <ul>
+          <% @referee.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+   <% end %>
 
-	<div class="form-group">
-		<%= f.label :upload %>
-		<%= f.text_field :upload %>
-	</div>
+<div class="container">
+  <div class="jumbotron">
+    <%= form_for @referee , :action => "create", :method => :post do |f| %>
+      <%= render 'referee_fields', f: f %>
+      <%= f.submit "Create Referee", class: 'btn btn-primary btn-lg' %>
+    <% end %>
+  </div>
+</div>
 
-	<% f.submit 'Upload a new referee' %>	
-<% end %>

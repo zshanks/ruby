@@ -11,6 +11,13 @@ module SessionsHelper
     @current_user = user
   end
   
+  def ensure_user_logged_in
+      if (!logged_in?)
+        flash[:warning] = "There is an error"
+        redirect_to login_path
+      end
+  end
+  
   def ensure_current_user
       @user = User.find(params[:id])
       (redirect_to "/" and flash[:danger] = "Error") unless current_user?(@user)
