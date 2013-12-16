@@ -27,7 +27,7 @@ class ContestsController < ApplicationController
   end
   
   def create
-    @contest - current_user.contests.build(permitted_params)
+    @contest = current_user.contests.build(permitted_params)
     if@contest.save
       flash[:success] = "Contest has been created! YIPPIE!!!"
       redirect_to @contest
