@@ -1,4 +1,4 @@
-class ContestController < ApplicationController
+class ContestsController < ApplicationController
   before_action :ensure_user_logged_in, only: [:new, :create, :update, :destroy, :edit]
   before_action :ensure_contest_creator, only: [:edit, :update, :create, :new, :destroy]
   before_action :ensure_owner, only: [:update, :destroy, :edit]
@@ -32,7 +32,7 @@ class ContestController < ApplicationController
       flash[:success] = "Contest has been created! YIPPIE!!!"
       redirect_to @contest
     else
-      flash[:danger] = "Cant create contest.. Sad day for all"
+      flash[:danger] = "Can't create contest.. Sad day for all"
       render :new
     end
   end
@@ -67,4 +67,3 @@ class ContestController < ApplicationController
       @contest = Contest.find(params[:id])
     end
   end
-end
